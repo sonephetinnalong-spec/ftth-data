@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="lo">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ແບບຟອມເກັບກໍາຂໍ້ມູນລູກຄ້າ FTTH</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Lao:wght@300;400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<style>
+  :root {
+    --red: #C0392B;
+    --red-dark: #96281B;
+    --red-light: #FDECEA;
+    --blue: #1A5276;
+    --blue-mid: #2471A3;
+    --blue-light: #EAF2FB;
+    --gold: #D4AC0D;
+    --gold-light: #FEF9E7;
+    --bg: #F5F6FA;
+    --white: #FFFFFF;
+    --text: #1C2333;
+    --text-muted: #6B7280;
+    --border: #DDE1E9;
+    --radius: 10px;
+    --shadow: 0 2px 12px rgba(0,0,0,0.07);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans Lao', 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  header {
+    background: linear-gradient(135deg, var(--red) 0%, var(--red-dark) 100%);
+    color: white;
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    box-shadow: 0 3px 16px rgba(192,57,43,0.25);
+  }
+  .header-flag {
+    display: flex;
+    gap: 3px;
+    align-items: center;
+  }
+  .flag-stripe {
+    width: 6px;
+    height: 40px;
+    border-radius: 3px;
+  }
+  .flag-r { background: #CE1126; }
+  .flag-b { background: #002868; }
+  .header-title h1 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+  }
+  .header-title p {
+    font-size: 0.8rem;
+    opacity: 0.85;
+    margin-top: 2px;
+  }
+  .header-badge {
+    margin-left: auto;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 20px;
+    padding: 4px 14px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  /* MAIN */
+  main {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 28px 16px 60px;
+  }
+
+  /* SECTION */
+  .section {
+    background: var(--white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
+  .section-header {
+    background: var(--blue);
+    color: white;
+    padding: 12px 20px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-header.gold { background: var(--gold); color: var(--text); }
+  .section-header.red  { background: var(--red); }
+  .section-body { padding: 20px; }
+
+  /* FORM GRID */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+  .span-2 { grid-column: span 2; }
+
+  /* FIELD */
+  .field { display: flex; flex-direction: column; gap: 5px; }
+  label {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--blue);
+  }
+  label .req { color: var(--red); margin-left: 2px; }
+  label .opt { color: var(--text-muted); font-weight: 400; font-size: 0.75rem; margin-left: 4px; }
+
+  input[type="text"],
+  input[type="tel"],
+  input[type="date"],
+  select,
+  textarea {
+    width: 100%;
+    border: 1.5px solid var(--border);
+    border-radius: 7px;
+    padding: 9px 12px;
+    font-family: inherit;
+    font-size: 0.9rem;
+    color: var(--text);
+    background: white;
+    transition: border-color 0.15s;
+    outline: none;
+  }
+  input:focus, select:focus, textarea:focus {
+    border-color: var(--blue-mid);
+    box-shadow: 0 0 0 3px var(--blue-light);
+  }
+  textarea { resize: vertical; min-height: 70px; }
+
+  /* CITY SELECT */
+  #citySelect {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--blue);
+    background: var(--blue-light);
+    border-color: var(--blue-mid);
+    cursor: pointer;
+  }
+
+  /* CHECKBOX GROUP */
+  .cb-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 4px;
+  }
+  .cb-item {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    cursor: pointer;
+    padding: 7px 14px;
+    border-radius: 20px;
+    border: 1.5px solid var(--border);
+    font-size: 0.85rem;
+    transition: all 0.15s;
+    user-select: none;
+  }
+  .cb-item:hover { border-color: var(--blue-mid); background: var(--blue-light); }
+  .cb-item input[type="checkbox"] { display: none; }
+  .cb-item .dot {
+    width: 16px; height: 16px;
+    border-radius: 4px;
+    border: 2px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.15s;
+  }
+  .cb-item input:checked ~ .dot {
+    background: var(--blue-mid);
+    border-color: var(--blue-mid);
+  }
+  .cb-item input:checked ~ .dot::after {
+    content: '✓';
+    color: white;
+    font-size: 10px;
+    font-weight: 700;
+  }
+  .cb-item.checked { border-color: var(--blue-mid); background: var(--blue-light); }
+
+  /* RADIO GROUP */
+  .radio-group { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 4px; }
+  .radio-item {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    cursor: pointer;
+    padding: 7px 14px;
+    border-radius: 20px;
+    border: 1.5px solid var(--border);
+    font-size: 0.85rem;
+    transition: all 0.15s;
+    user-select: none;
+  }
+  .radio-item:hover { border-color: var(--red); background: var(--red-light); }
+  .radio-item input[type="radio"] { display: none; }
+  .radio-item .rdot {
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    border: 2px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.15s;
+  }
+  .radio-item input:checked ~ .rdot {
+    border-color: var(--red);
+    background: var(--red);
+  }
+  .radio-item input:checked ~ .rdot::after {
+    content: '';
+    width: 5px; height: 5px;
+    background: white;
+    border-radius: 50%;
+  }
+  .radio-item.checked { border-color: var(--red); background: var(--red-light); }
+
+  /* GPS MAP */
+  #map {
+    height: 240px;
+    border-radius: 8px;
+    border: 1.5px solid var(--border);
+    overflow: hidden;
+    margin-top: 8px;
+  }
+  .gps-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
+  .btn-locate {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: var(--blue);
+    color: white;
+    border: none;
+    border-radius: 7px;
+    padding: 9px 18px;
+    font-family: inherit;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s;
+    margin-top: 8px;
+  }
+  .btn-locate:hover { background: var(--blue-dark, #154360); }
+  .btn-locate:active { transform: scale(0.98); }
+
+  /* TOGGLE */
+  .toggle-wrap { display: flex; align-items: center; gap: 10px; margin-top: 6px; }
+  .toggle {
+    position: relative;
+    width: 44px; height: 24px;
+    flex-shrink: 0;
+  }
+  .toggle input { opacity: 0; width: 0; height: 0; }
+  .toggle-slider {
+    position: absolute; inset: 0;
+    background: var(--border);
+    border-radius: 24px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .toggle-slider::before {
+    content: '';
+    position: absolute;
+    width: 18px; height: 18px;
+    left: 3px; top: 3px;
+    background: white;
+    border-radius: 50%;
+    transition: transform 0.2s;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+  }
+  .toggle input:checked + .toggle-slider { background: var(--red); }
+  .toggle input:checked + .toggle-slider::before { transform: translateX(20px); }
+  .toggle-label { font-size: 0.85rem; color: var(--text-muted); }
+
+  /* SUBMIT */
+  .submit-wrap { text-align: center; margin-top: 28px; }
+  .btn-submit {
+    background: linear-gradient(135deg, var(--red) 0%, var(--red-dark) 100%);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 14px 52px;
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(192,57,43,0.3);
+    transition: all 0.2s;
+    letter-spacing: 0.02em;
+  }
+  .btn-submit:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(192,57,43,0.35); }
+  .btn-submit:active { transform: scale(0.98); }
+  .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+  /* TOAST */
+  #toast {
+    position: fixed;
+    bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px);
+    background: #1B4F1A; color: white;
+    padding: 14px 28px;
+    border-radius: 10px;
+    font-size: 0.9rem; font-weight: 600;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    transition: transform 0.3s ease;
+    z-index: 9999;
+    white-space: nowrap;
+  }
+  #toast.error { background: var(--red-dark); }
+  #toast.show { transform: translateX(-50%) translateY(0); }
+
+  /* LOADING */
+  .spinner { display: none; }
+  .btn-submit.loading .spinner { display: inline-block; }
+  .btn-submit.loading .btn-text { display: none; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .spinner {
+    width: 18px; height: 18px;
+    border: 3px solid rgba(255,255,255,0.4);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    display: none;
+  }
+
+  /* DIVIDER */
+  .divider { height: 1px; background: var(--border); margin: 16px 0; }
+
+  /* NOTE */
+  .note {
+    background: var(--gold-light);
+    border-left: 4px solid var(--gold);
+    border-radius: 0 7px 7px 0;
+    padding: 10px 14px;
+    font-size: 0.8rem;
+    color: #7D6608;
+    margin-bottom: 16px;
+  }
+
+  @media (max-width: 500px) {
+    .grid-2, .grid-3 { grid-template-columns: 1fr; }
+    .span-2 { grid-column: span 1; }
+    .gps-row { grid-template-columns: 1fr; }
+    header { flex-wrap: wrap; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-flag">
+    <div class="flag-stripe flag-r"></div>
+    <div class="flag-stripe flag-b"></div>
+    <div class="flag-stripe flag-r"></div>
+  </div>
+  <div class="header-title">
+    <h1>ແບບຟອມເກັບກໍາຂໍ້ມູນລູກຄ້າ FTTH</h1>
+    <p>ບໍລິສັດໂທລະຄົມລາວ · ກຳລັງດຳເນີນງານ</p>
+  </div>
+  <div class="header-badge">FTTH</div>
+</header>
+
+<main>
+  <div class="note">
+    📋 ກະລຸນາກວດສອບຂໍ້ມູນໃຫ້ຖືກຕ້ອງກ່ອນກົດ "ບັນທຶກຂໍ້ມູນ" — ຂໍ້ມູນຈະຖືກສົ່ງໄປ Google Sheet ທັນທີ
+  </div>
+
+  <!-- CITY SELECT -->
+  <div class="section">
+    <div class="section-header" style="background: var(--red);">
+      📍 ເລືອກເມືອງ
+    </div>
+    <div class="section-body">
+      <div class="field">
+        <label>ເມືອງ <span class="req">*</span></label>
+        <select id="citySelect">
+          <option value="">— ເລືອກເມືອງ —</option>
+          <option value="Xay">ເມືອງໄຊ (Xay)</option>
+          <option value="La">ເມືອງລາ (La)</option>
+          <option value="Namor">ເມືອງນໍ້າອ່ວຍ (Namor)</option>
+          <option value="Beng">ເມືອງແບ່ງ (Beng)</option>
+          <option value="Houn">ເມືອງຮ່ວນ (Houn)</option>
+          <option value="ParkBeng">ເມືອງປາກແບ່ງ (ParkBeng)</option>
+          <option value="Nga">ເມືອງງາ (Nga)</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- BASIC INFO -->
+  <div class="section">
+    <div class="section-header">👤 ຂໍ້ມູນລູກຄ້າ</div>
+    <div class="section-body">
+      <div class="grid-2">
+        <div class="field span-2">
+          <label>ຊື່ ແລະ ນາສະກຸນ <span class="req">*</span></label>
+          <input type="text" id="name" placeholder="ກະລຸນາໃສ່ຊື່ ແລະ ນາສະກຸນ">
+        </div>
+        <div class="field">
+          <label>ບ້ານ <span class="req">*</span></label>
+          <input type="text" id="village" placeholder="ຊື່ບ້ານ">
+        </div>
+        <div class="field">
+          <label>ແຂວງ <span class="req">*</span></label>
+          <input type="text" id="province" placeholder="ຊື່ແຂວງ" value="ອຸດົມໄຊ">
+        </div>
+        <div class="field span-2">
+          <label>ເບີຕິດຕໍ່ <span class="req">*</span></label>
+          <input type="tel" id="phone" placeholder="020XXXXXXXX">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GPS -->
+  <div class="section">
+    <div class="section-header" style="background: #1E8449;">🗺️ ຈຸດ GPS (ທີ່ຕັ້ງລູກຄ້າ)</div>
+    <div class="section-body">
+      <button class="btn-locate" onclick="locateMe()">
+        <span>📡</span> ດຶງ GPS ອັດຕະໂນມັດ
+      </button>
+      <div id="map"></div>
+      <div class="gps-row">
+        <div class="field">
+          <label>Latitude</label>
+          <input type="text" id="lat" placeholder="0.000000" oninput="updateMarkerFromInput()">
+        </div>
+        <div class="field">
+          <label>Longitude</label>
+          <input type="text" id="lng" placeholder="0.000000" oninput="updateMarkerFromInput()">
+        </div>
+      </div>
+      <p style="font-size:0.75rem;color:var(--text-muted);margin-top:8px;">💡 ຄລິກທີ່ແຜນທີ່ ຫຼື ກົດ "ດຶງ GPS" ເພື່ອໝາຍຈຸດທີ່ຕັ້ງ</p>
+    </div>
+  </div>
+
+  <!-- USER + NETWORK -->
+  <div class="section">
+    <div class="section-header">📶 ຂໍ້ມູນການໃຊ້ງານ</div>
+    <div class="section-body">
+      <!-- User field: optional -->
+      <div class="field" style="margin-bottom:16px;">
+        <label>User <span class="opt">(ບໍ່ຈໍາເປັນ)</span></label>
+        <input type="text" id="userField" placeholder="Username (ຖ້າມີ)">
+      </div>
+      <div class="divider"></div>
+      <div class="field">
+        <label>ນຳໃຊ້ເຄືອຂ່າຍ <span class="req">*</span></label>
+        <div class="cb-group" id="networkGroup">
+          <label class="cb-item" onclick="toggleCb(this)">
+            <input type="checkbox" name="network" value="Unitel">
+            <span class="dot"></span>Unitel
+          </label>
+          <label class="cb-item" onclick="toggleCb(this)">
+            <input type="checkbox" name="network" value="ETL">
+            <span class="dot"></span>ETL
+          </label>
+          <label class="cb-item" onclick="toggleCb(this)">
+            <input type="checkbox" name="network" value="Best">
+            <span class="dot"></span>Best
+          </label>
+          <label class="cb-item" onclick="toggleCb(this)">
+            <input type="checkbox" name="network" value="LTC">
+            <span class="dot"></span>LTC
+          </label>
+          <label class="cb-item" onclick="toggleCb(this)">
+            <input type="checkbox" name="network" value="ບໍ່ມີ">
+            <span class="dot"></span>ບໍ່ມີ
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESULT -->
+  <div class="section">
+    <div class="section-header section-header red">📊 ຜົນປະຕິບັດ</div>
+    <div class="section-body">
+      <div class="field" style="margin-bottom:16px;">
+        <label>ຜົນການດຳເນີນງານ</label>
+        <div class="radio-group" id="resultGroup">
+          <label class="radio-item" onclick="toggleRadio(this,'resultGroup')">
+            <input type="radio" name="result" value="ສົນໃຈ">
+            <span class="rdot"></span>✅ ສົນໃຈ
+          </label>
+          <label class="radio-item" onclick="toggleRadio(this,'resultGroup')">
+            <input type="radio" name="result" value="ບໍ່ສົນໃຈ">
+            <span class="rdot"></span>❌ ບໍ່ສົນໃຈ
+          </label>
+          <label class="radio-item" onclick="toggleRadio(this,'resultGroup')">
+            <input type="radio" name="result" value="ລໍຖ້າຄຳຕອບ">
+            <span class="rdot"></span>⏳ ລໍຖ້າຄຳຕອບ
+          </label>
+        </div>
+      </div>
+      <div class="divider"></div>
+      <div class="field">
+        <label>ລູກຄ້າບໍ່ໃຫ້ຄວາມຮ່ວມມື</label>
+        <div class="toggle-wrap">
+          <label class="toggle">
+            <input type="checkbox" id="noCooperate">
+            <span class="toggle-slider"></span>
+          </label>
+          <span class="toggle-label" id="noCooperateLabel">ບໍ່</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PACKAGE & NOTES -->
+  <div class="section">
+    <div class="section-header section-header gold">📅 ແພັກເກດ ແລະ ໝາຍເຫດ</div>
+    <div class="section-body">
+      <div class="grid-2">
+        <div class="field span-2">
+          <label>ວັນທີ່ໝົດແພັກເກດ</label>
+          <input type="date" id="packageExpiry">
+        </div>
+        <div class="field span-2">
+          <label>ຂໍ້ມູນການໃຊ້ງານຂອງລູກຄ້າ</label>
+          <textarea id="usageInfo" placeholder="ລາຍລະອຽດການໃຊ້ງານ..."></textarea>
+        </div>
+        <div class="field span-2">
+          <label>ໝາຍເຫດ</label>
+          <textarea id="remark" placeholder="ໝາຍເຫດເພີ່ມເຕີມ..."></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="submit-wrap">
+    <button class="btn-submit" id="submitBtn" onclick="submitForm()">
+      <span class="spinner"></span>
+      <span class="btn-text">💾 ບັນທຶກຂໍ້ມູນ</span>
+    </button>
+    <p style="margin-top:12px;font-size:0.78rem;color:var(--text-muted);">ຂໍ້ມູນຈະຖືກສົ່ງໄປຍັງ Google Sheet ຕາມເມືອງທີ່ເລືອກ</p>
+  </div>
+</main>
+
+<div id="toast"></div>
+
+<script>
+  // ─── CONFIG ───────────────────────────────────────────────────
+  const SHEET_ID = '1wsTtemDn39rEyJHdh2yOWENXASYbEberMkKr1fuuyuE';
+  // ⚠️ ໃສ່ URL ຂອງ Google Apps Script Web App ທີ່ Deploy ແລ້ວ:
+  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzOmBGPUzXsRY3hMZAfo2g4zRKYTt14J2cZ9T43GOq_jPWIsoM0FHqVtc7T6ObzY4ZT/exec';
+  // ──────────────────────────────────────────────────────────────
+
+  // MAP
+  let map, marker;
+  function initMap() {
+    if (typeof L === 'undefined') { setTimeout(initMap, 300); return; }
+    map = L.map('map').setView([20.7, 102.0], 10);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap',
+      maxZoom: 19
+    }).addTo(map);
+    map.on('click', (e) => setMarker(e.latlng.lat, e.latlng.lng));
+  }
+  window.addEventListener('load', initMap);
+
+  function updateMarkerFromInput() {
+    const lat = parseFloat(document.getElementById('lat').value);
+    const lng = parseFloat(document.getElementById('lng').value);
+    if (!isNaN(lat) && !isNaN(lng) && lat >= -90 && lat <= 90 && lng >= -180 && lng <= 180) {
+      if (map) {
+        map.setView([lat, lng], map.getZoom() < 13 ? 15 : map.getZoom());
+        setMarker(lat, lng, true);
+      }
+    }
+  }
+
+  function setMarker(lat, lng, fromInput) {
+    if (marker) map.removeLayer(marker);
+    marker = L.marker([lat, lng], {
+      icon: L.divIcon({
+        html: '<div style="background:#C0392B;width:18px;height:18px;border-radius:50%;border:3px solid white;box-shadow:0 2px 6px rgba(0,0,0,0.4)"></div>',
+        iconSize: [18, 18], iconAnchor: [9, 9]
+      })
+    }).addTo(map);
+    if (!fromInput) {
+      document.getElementById('lat').value = lat.toFixed(6);
+      document.getElementById('lng').value = lng.toFixed(6);
+    }
+  }
+
+  function locateMe() {
+    if (!navigator.geolocation) { showToast('ອຸປະກອນນີ້ບໍ່ຮອງຮັບ GPS', true); return; }
+    const btn = document.querySelector('.btn-locate');
+    btn.textContent = '⏳ ກຳລັງດຶງ GPS...';
+    btn.disabled = true;
+
+    navigator.geolocation.getCurrentPosition(
+      pos => {
+        const { latitude, longitude, accuracy } = pos.coords;
+        map.setView([latitude, longitude], 18);
+        setMarker(latitude, longitude);
+        btn.innerHTML = '<span>📡</span> ດຶງ GPS ອັດຕະໂນມັດ';
+        btn.disabled = false;
+        showToast('✅ GPS ສຳເລັດ · ຄວາມຖືກຕ້ອງ ±' + Math.round(accuracy) + 'm');
+      },
+      (err) => {
+        btn.innerHTML = '<span>📡</span> ດຶງ GPS ອັດຕະໂນມັດ';
+        btn.disabled = false;
+        showToast('❌ GPS ລົ້ມເຫຼວ: ' + err.message, true);
+      },
+      {
+        enableHighAccuracy: true,  // ໃຊ້ GPS ຊິບ (ບໍ່ໃຊ້ WiFi)
+        timeout: 15000,            // ລໍຖ້າ 15 ວິນາທີ
+        maximumAge: 0              // ບໍ່ໃຊ້ cache ເກົ່າ
+      }
+    );
+  }
+
+  // CHECKBOX
+  function toggleCb(el) {
+    const cb = el.querySelector('input[type="checkbox"]');
+    setTimeout(() => {
+      el.classList.toggle('checked', cb.checked);
+    }, 0);
+  }
+
+  // RADIO
+  function toggleRadio(el, groupId) {
+    document.querySelectorAll(`#${groupId} .radio-item`).forEach(r => r.classList.remove('checked'));
+    setTimeout(() => el.classList.add('checked'), 0);
+  }
+
+  // TOGGLE
+  document.getElementById('noCooperate').addEventListener('change', function() {
+    document.getElementById('noCooperateLabel').textContent = this.checked ? 'ແມ່ນ' : 'ບໍ່';
+  });
+
+  // ROW NUMBER: auto-increment per sheet (simple timestamp-based for now)
+  let rowCounter = Date.now();
+
+  // SUBMIT
+  async function submitForm() {
+    const city = document.getElementById('citySelect').value;
+    const name = document.getElementById('name').value.trim();
+    const village = document.getElementById('village').value.trim();
+    const province = document.getElementById('province').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+
+    // Validation
+    if (!city) { showToast('⚠️ ກະລຸນາເລືອກເມືອງ', true); return; }
+    if (!name) { showToast('⚠️ ກະລຸນາໃສ່ຊື່ລູກຄ້າ', true); return; }
+    if (!village) { showToast('⚠️ ກະລຸນາໃສ່ຊື່ບ້ານ', true); return; }
+    if (!phone) { showToast('⚠️ ກະລຸນາໃສ່ເບີຕິດຕໍ່', true); return; }
+
+    // Networks
+    const networks = [...document.querySelectorAll('input[name="network"]:checked')].map(c => c.value);
+    const result = document.querySelector('input[name="result"]:checked')?.value || '';
+
+    const payload = {
+      sheet: city,
+      data: {
+        name,
+        village,
+        city,
+        province,
+        phone,
+        lat: document.getElementById('lat').value,
+        lng: document.getElementById('lng').value,
+        user: document.getElementById('userField').value.trim(),
+        unitel: networks.includes('Unitel') ? '✓' : '',
+        etl:    networks.includes('ETL')    ? '✓' : '',
+        best:   networks.includes('Best')   ? '✓' : '',
+        ltc:    networks.includes('LTC')    ? '✓' : '',
+        noNetwork: networks.includes('ບໍ່ມີ') ? '✓' : '',
+        interested:   result === 'ສົນໃຈ'       ? '✓' : '',
+        notInterested: result === 'ບໍ່ສົນໃຈ'    ? '✓' : '',
+        waiting:      result === 'ລໍຖ້າຄຳຕອບ' ? '✓' : '',
+        noCooperate:  document.getElementById('noCooperate').checked ? '✓' : '',
+        packageExpiry: document.getElementById('packageExpiry').value,
+        usageInfo: document.getElementById('usageInfo').value.trim(),
+        remark: document.getElementById('remark').value.trim(),
+        timestamp: new Date().toLocaleString('lo-LA')
+      }
+    };
+
+    if (APPS_SCRIPT_URL === 'YOUR_APPS_SCRIPT_URL_HERE') {
+      // Demo mode
+      console.log('📋 Payload:', payload);
+      showToast('⚠️ Demo Mode: ຍັງບໍ່ໄດ້ຕັ້ງ Apps Script URL — ເບິ່ງຄຳແນະນຳດ້ານລຸ່ມ', true);
+      return;
+    }
+
+    const btn = document.getElementById('submitBtn');
+    btn.disabled = true;
+    btn.classList.add('loading');
+
+    // Use no-cors fetch (Apps Script CORS workaround)
+    // We assume success after sending since no-cors won't return readable response
+    try {
+      await fetch(APPS_SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain' },
+        body: JSON.stringify(payload)
+      });
+      showToast('✅ ບັນທຶກຂໍ້ມູນສຳເລັດ!');
+      resetForm();
+    } catch (e) {
+      showToast('❌ ເຊື່ອມຕໍ່ບໍ່ໄດ້: ' + e.message, true);
+    } finally {
+      btn.disabled = false;
+      btn.classList.remove('loading');
+    }
+  }
+
+  function resetForm() {
+    ['name','village','phone','lat','lng','userField','usageInfo','remark'].forEach(id => {
+      document.getElementById(id).value = '';
+    });
+    document.getElementById('packageExpiry').value = '';
+    document.getElementById('noCooperate').checked = false;
+    document.getElementById('noCooperateLabel').textContent = 'ບໍ່';
+    document.querySelectorAll('input[name="network"]').forEach(c => c.checked = false);
+    document.querySelectorAll('.cb-item').forEach(c => c.classList.remove('checked'));
+    document.querySelectorAll('input[name="result"]').forEach(c => c.checked = false);
+    document.querySelectorAll('.radio-item').forEach(c => c.classList.remove('checked'));
+    if (marker) { map.removeLayer(marker); marker = null; }
+  }
+
+  function showToast(msg, isError = false) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.className = isError ? 'error show' : 'show';
+    clearTimeout(t._timer);
+    t._timer = setTimeout(() => t.classList.remove('show'), 3500);
+  }
+</script>
+
+<!-- ═══════════════════════════════════════════════════════════
+  📌 ຄຳແນະນຳຕັ້ງ Google Apps Script
+  ════════════════════════════════════════════════════════════
+
+  1. ເປີດ Google Sheet ຂອງທ່ານ
+  2. ໄປທີ່: Extensions > Apps Script
+  3. ລົບ Code ເດີມ ແລ້ວ Paste Code ດ້ານລຸ່ມ:
+
+  ─────────────────────────────────────────────────────────────
+  function doPost(e) {
+    try {
+      var body = JSON.parse(e.postData.contents);
+      var ss = SpreadsheetApp.getActiveSpreadsheet();
+      var sheet = ss.getSheetByName(body.sheet);
+      if (!sheet) return ContentService
+        .createTextOutput(JSON.stringify({result:'error',error:'Sheet not found: '+body.sheet}))
+        .setMimeType(ContentService.MimeType.JSON);
+
+      var d = body.data;
+      // Find next empty row (skip header rows 1-2)
+      var lastRow = Math.max(sheet.getLastRow(), 2);
+      var rowNum = lastRow - 1; // row number (excluding 2 header rows)
+
+      sheet.appendRow([
+        rowNum+1, d.name, d.village, d.city, d.province, d.phone,
+        d.lat, d.lng, d.user,
+        d.unitel, d.etl, d.best, d.ltc, d.noNetwork,
+        d.interested, d.notInterested, d.waiting,
+        d.noCooperate, d.packageExpiry, d.usageInfo, d.remark,
+        d.timestamp
+      ]);
+
+      return ContentService
+        .createTextOutput(JSON.stringify({result:'success'}))
+        .setMimeType(ContentService.MimeType.JSON);
+    } catch(err) {
+      return ContentService
+        .createTextOutput(JSON.stringify({result:'error',error:err.message}))
+        .setMimeType(ContentService.MimeType.JSON);
+    }
+  }
+
+  function doGet(e) {
+    return ContentService
+      .createTextOutput(JSON.stringify({status:'ok'}))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+  ─────────────────────────────────────────────────────────────
+
+  4. ກົດ Save (Ctrl+S)
+  5. ກົດ "Deploy" > "New deployment"
+  6. Type: "Web app"
+     - Execute as: Me
+     - Who has access: Anyone
+  7. ກົດ "Deploy" > Copy URL ທີ່ໄດ້
+  8. ເອົາ URL ນັ້ນ ໃສ່ໃນ const APPS_SCRIPT_URL = '...' ໃນ HTML ນີ້
+
+  ═══════════════════════════════════════════════════════════ -->
+
+</body>
+</html>
