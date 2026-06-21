@@ -25,17 +25,16 @@
     --radius: 10px;
     --shadow: 0 2px 12px rgba(0,0,0,0.07);
   }
- 
+
   * { box-sizing: border-box; margin: 0; padding: 0; }
- 
+
   body {
     font-family: 'Noto Sans Lao', 'Inter', sans-serif;
     background: var(--bg);
     color: var(--text);
     min-height: 100vh;
   }
- 
-  /* HEADER */
+
   header {
     background: linear-gradient(135deg, var(--red) 0%, var(--red-dark) 100%);
     color: white;
@@ -45,28 +44,12 @@
     gap: 16px;
     box-shadow: 0 3px 16px rgba(192,57,43,0.25);
   }
-  .header-flag {
-    display: flex;
-    gap: 3px;
-    align-items: center;
-  }
-  .flag-stripe {
-    width: 6px;
-    height: 40px;
-    border-radius: 3px;
-  }
+  .header-flag { display: flex; gap: 3px; align-items: center; }
+  .flag-stripe { width: 6px; height: 40px; border-radius: 3px; }
   .flag-r { background: #CE1126; }
   .flag-b { background: #002868; }
-  .header-title h1 {
-    font-size: 1.2rem;
-    font-weight: 700;
-    letter-spacing: 0.01em;
-  }
-  .header-title p {
-    font-size: 0.8rem;
-    opacity: 0.85;
-    margin-top: 2px;
-  }
+  .header-title h1 { font-size: 1.2rem; font-weight: 700; letter-spacing: 0.01em; }
+  .header-title p { font-size: 0.8rem; opacity: 0.85; margin-top: 2px; }
   .header-badge {
     margin-left: auto;
     background: rgba(255,255,255,0.15);
@@ -78,15 +61,9 @@
     letter-spacing: 0.05em;
     text-transform: uppercase;
   }
- 
-  /* MAIN */
-  main {
-    max-width: 760px;
-    margin: 0 auto;
-    padding: 28px 16px 60px;
-  }
- 
-  /* SECTION */
+
+  main { max-width: 760px; margin: 0 auto; padding: 28px 16px 60px; }
+
   .section {
     background: var(--white);
     border-radius: var(--radius);
@@ -108,22 +85,16 @@
   .section-header.gold { background: var(--gold); color: var(--text); }
   .section-header.red  { background: var(--red); }
   .section-body { padding: 20px; }
- 
-  /* FORM GRID */
+
   .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
   .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
   .span-2 { grid-column: span 2; }
- 
-  /* FIELD */
+
   .field { display: flex; flex-direction: column; gap: 5px; }
-  label {
-    font-size: 0.82rem;
-    font-weight: 600;
-    color: var(--blue);
-  }
+  label { font-size: 0.82rem; font-weight: 600; color: var(--blue); }
   label .req { color: var(--red); margin-left: 2px; }
   label .opt { color: var(--text-muted); font-weight: 400; font-size: 0.75rem; margin-left: 4px; }
- 
+
   input[type="text"],
   input[type="tel"],
   input[type="date"],
@@ -145,9 +116,9 @@
     box-shadow: 0 0 0 3px var(--blue-light);
   }
   textarea { resize: vertical; min-height: 70px; }
- 
-  /* CITY SELECT */
-  #citySelect {
+
+  /* District & Month select highlight */
+  #districtSelect, #citySelect {
     font-size: 1rem;
     font-weight: 600;
     color: var(--blue);
@@ -155,14 +126,8 @@
     border-color: var(--blue-mid);
     cursor: pointer;
   }
- 
-  /* CHECKBOX GROUP */
-  .cb-group {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 4px;
-  }
+
+  .cb-group { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 4px; }
   .cb-item {
     display: flex;
     align-items: center;
@@ -185,19 +150,10 @@
     flex-shrink: 0;
     transition: all 0.15s;
   }
-  .cb-item input:checked ~ .dot {
-    background: var(--blue-mid);
-    border-color: var(--blue-mid);
-  }
-  .cb-item input:checked ~ .dot::after {
-    content: '✓';
-    color: white;
-    font-size: 10px;
-    font-weight: 700;
-  }
+  .cb-item input:checked ~ .dot { background: var(--blue-mid); border-color: var(--blue-mid); }
+  .cb-item input:checked ~ .dot::after { content: '✓'; color: white; font-size: 10px; font-weight: 700; }
   .cb-item.checked { border-color: var(--blue-mid); background: var(--blue-light); }
- 
-  /* RADIO GROUP */
+
   .radio-group { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 4px; }
   .radio-item {
     display: flex;
@@ -221,19 +177,10 @@
     flex-shrink: 0;
     transition: all 0.15s;
   }
-  .radio-item input:checked ~ .rdot {
-    border-color: var(--red);
-    background: var(--red);
-  }
-  .radio-item input:checked ~ .rdot::after {
-    content: '';
-    width: 5px; height: 5px;
-    background: white;
-    border-radius: 50%;
-  }
+  .radio-item input:checked ~ .rdot { border-color: var(--red); background: var(--red); }
+  .radio-item input:checked ~ .rdot::after { content: ''; width: 5px; height: 5px; background: white; border-radius: 50%; }
   .radio-item.checked { border-color: var(--red); background: var(--red-light); }
- 
-  /* GPS MAP */
+
   #map {
     height: 240px;
     border-radius: 8px;
@@ -258,39 +205,31 @@
     transition: background 0.15s;
     margin-top: 8px;
   }
-  .btn-locate:hover { background: var(--blue-dark, #154360); }
+  .btn-locate:hover { background: #154360; }
   .btn-locate:active { transform: scale(0.98); }
- 
-  /* TOGGLE */
-  .toggle-wrap { display: flex; align-items: center; gap: 10px; margin-top: 6px; }
-  .toggle {
-    position: relative;
-    width: 44px; height: 24px;
-    flex-shrink: 0;
+
+  .divider { height: 1px; background: var(--border); margin: 16px 0; }
+
+  .note {
+    background: var(--gold-light);
+    border-left: 4px solid var(--gold);
+    border-radius: 0 7px 7px 0;
+    padding: 10px 14px;
+    font-size: 0.8rem;
+    color: #7D6608;
+    margin-bottom: 16px;
   }
-  .toggle input { opacity: 0; width: 0; height: 0; }
-  .toggle-slider {
-    position: absolute; inset: 0;
-    background: var(--border);
-    border-radius: 24px;
-    cursor: pointer;
-    transition: background 0.2s;
+
+  /* Month section at bottom — distinct look */
+  .section-month .section-header { background: #6C3483; }
+  .section-month select {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #6C3483;
+    background: #F5EEF8;
+    border-color: #A569BD;
   }
-  .toggle-slider::before {
-    content: '';
-    position: absolute;
-    width: 18px; height: 18px;
-    left: 3px; top: 3px;
-    background: white;
-    border-radius: 50%;
-    transition: transform 0.2s;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
-  }
-  .toggle input:checked + .toggle-slider { background: var(--red); }
-  .toggle input:checked + .toggle-slider::before { transform: translateX(20px); }
-  .toggle-label { font-size: 0.85rem; color: var(--text-muted); }
- 
-  /* SUBMIT */
+
   .submit-wrap { text-align: center; margin-top: 28px; }
   .btn-submit {
     background: linear-gradient(135deg, var(--red) 0%, var(--red-dark) 100%);
@@ -309,8 +248,7 @@
   .btn-submit:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(192,57,43,0.35); }
   .btn-submit:active { transform: scale(0.98); }
   .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
- 
-  /* TOAST */
+
   #toast {
     position: fixed;
     bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px);
@@ -325,8 +263,7 @@
   }
   #toast.error { background: var(--red-dark); }
   #toast.show { transform: translateX(-50%) translateY(0); }
- 
-  /* LOADING */
+
   .spinner { display: none; }
   .btn-submit.loading .spinner { display: inline-block; }
   .btn-submit.loading .btn-text { display: none; }
@@ -339,21 +276,7 @@
     animation: spin 0.7s linear infinite;
     display: none;
   }
- 
-  /* DIVIDER */
-  .divider { height: 1px; background: var(--border); margin: 16px 0; }
- 
-  /* NOTE */
-  .note {
-    background: var(--gold-light);
-    border-left: 4px solid var(--gold);
-    border-radius: 0 7px 7px 0;
-    padding: 10px 14px;
-    font-size: 0.8rem;
-    color: #7D6608;
-    margin-bottom: 16px;
-  }
- 
+
   @media (max-width: 500px) {
     .grid-2, .grid-3 { grid-template-columns: 1fr; }
     .span-2 { grid-column: span 1; }
@@ -363,7 +286,7 @@
 </style>
 </head>
 <body>
- 
+
 <header>
   <div class="header-flag">
     <div class="flag-stripe flag-r"></div>
@@ -376,53 +299,125 @@
   </div>
   <div class="header-badge">FTTH</div>
 </header>
- 
+
 <main>
   <div class="note">
     📋 ກະລຸນາກວດສອບຂໍ້ມູນໃຫ້ຖືກຕ້ອງກ່ອນກົດ "ບັນທຶກຂໍ້ມູນ" — ຂໍ້ມູນຈະຖືກສົ່ງໄປ Google Sheet ທັນທີ
   </div>
- 
-  <!-- CITY SELECT -->
-  <div class="section">
-    <div class="section-header" style="background: var(--red);">
-      📅 ເລືອກເດືອນ
-    </div>
-    <div class="section-body">
-      <div class="field">
-        <label>ເດືອນ <span class="req">*</span></label>
-        <select id="citySelect">
-          <option value="">— ເລືອກເດືອນ —</option>
-        </select>
-      </div>
-    </div>
-  </div>
- 
-  <!-- BASIC INFO -->
+
+  <!-- ══════════════════════════════════════
+       1. ຂໍ້ມູນລູກຄ້າ (ມີ dropdown ເມືອງ)
+  ══════════════════════════════════════ -->
   <div class="section">
     <div class="section-header">👤 ຂໍ້ມູນລູກຄ້າ</div>
     <div class="section-body">
       <div class="grid-2">
+
         <div class="field span-2">
           <label>ຊື່ ແລະ ນາສະກຸນ <span class="req">*</span></label>
           <input type="text" id="name" placeholder="ກະລຸນາໃສ່ຊື່ ແລະ ນາສະກຸນ">
         </div>
+
         <div class="field">
           <label>ບ້ານ <span class="req">*</span></label>
           <input type="text" id="village" placeholder="ຊື່ບ້ານ">
         </div>
+
+        <!-- ▶ NEW: ເມືອງ dropdown -->
+        <div class="field">
+          <label>ເມືອງ <span class="req">*</span></label>
+          <select id="districtSelect">
+            <option value="">— ເລືອກເມືອງ —</option>
+            <!-- ອຸດົມໄຊ -->
+            <optgroup label="ແຂວງອຸດົມໄຊ">
+              <option value="ເມືອງໄຊ">ເມືອງໄຊ</option>
+              <option value="ເມືອງນາ">ເມືອງນາ</option>
+              <option value="ເມືອງລາ">ເມືອງລາ</option>
+              <option value="ເມືອງແບງ">ເມືອງແບງ</option>
+              <option value="ເມືອງຮຸນ">ເມືອງຮຸນ</option>
+              <option value="ເມືອງງາ">ເມືອງງາ</option>
+              <option value="ເມືອງປາກແບງ">ເມືອງປາກແບງ</option>
+            </optgroup>
+            <!-- ວຽງຈັນ -->
+            <optgroup label="ນະຄອນຫຼວງວຽງຈັນ">
+              <option value="ເມືອງຈັນທະບູລີ">ເມືອງຈັນທະບູລີ</option>
+              <option value="ເມືອງສີໂຄດຕະບອງ">ເມືອງສີໂຄດຕະບອງ</option>
+              <option value="ເມືອງໄຊເສດຖາ">ເມືອງໄຊເສດຖາ</option>
+              <option value="ເມືອງສີສັດຕະນາກ">ເມືອງສີສັດຕະນາກ</option>
+              <option value="ເມືອງຫາດຊາຍຟອງ">ເມືອງຫາດຊາຍຟອງ</option>
+              <option value="ເມືອງສັງທອງ">ເມືອງສັງທອງ</option>
+              <option value="ເມືອງໃຫ້ຄຳ">ເມືອງໃຫ້ຄຳ</option>
+              <option value="ເມືອງນາຊາຍທອງ">ເມືອງນາຊາຍທອງ</option>
+              <option value="ເມືອງໂພນຫອງ">ເມືອງໂພນຫອງ</option>
+            </optgroup>
+            <!-- ຫຼວງພະບາງ -->
+            <optgroup label="ແຂວງຫຼວງພະບາງ">
+              <option value="ເມືອງຫຼວງພະບາງ">ເມືອງຫຼວງພະບາງ</option>
+              <option value="ເມືອງຊຽງເງິນ">ເມືອງຊຽງເງິນ</option>
+              <option value="ເມືອງນານ">ເມືອງນານ</option>
+              <option value="ເມືອງປາກອູ">ເມືອງປາກອູ</option>
+              <option value="ເມືອງນ້ຳບາກ">ເມືອງນ້ຳບາກ</option>
+              <option value="ເມືອງງອຍ">ເມືອງງອຍ</option>
+              <option value="ເມືອງປາກແຊງ">ເມືອງປາກແຊງ</option>
+              <option value="ເມືອງໂພນໄຊ">ເມືອງໂພນໄຊ</option>
+              <option value="ເມືອງຄາ">ເມືອງຄາ</option>
+              <option value="ເມືອງໂພນທອງ">ເມືອງໂພນທອງ</option>
+              <option value="ເມືອງວຽງຄຳ">ເມືອງວຽງຄຳ</option>
+              <option value="ເມືອງຈອມເພດ">ເມືອງຈອມເພດ</option>
+            </optgroup>
+            <!-- ຊຽງຂວາງ -->
+            <optgroup label="ແຂວງຊຽງຂວາງ">
+              <option value="ເມືອງແປກ">ເມືອງແປກ</option>
+              <option value="ເມືອງຄູນ">ເມືອງຄູນ</option>
+              <option value="ເມືອງໜອງແຮດ">ເມືອງໜອງແຮດ</option>
+              <option value="ເມືອງຄໍາ">ເມືອງຄໍາ</option>
+              <option value="ເມືອງໄຊຈຳພອນ">ເມືອງໄຊຈຳພອນ</option>
+              <option value="ເມືອງຜາໄຊ">ເມືອງຜາໄຊ</option>
+              <option value="ເມືອງໝໍ້">ເມືອງໝໍ້</option>
+            </optgroup>
+            <!-- ສາລະວັນ -->
+            <optgroup label="ແຂວງສາລະວັນ">
+              <option value="ເມືອງສາລະວັນ">ເມືອງສາລະວັນ</option>
+              <option value="ເມືອງລາໂອງາມ">ເມືອງລາໂອງາມ</option>
+              <option value="ເມືອງຕຸ້ມລານ">ເມືອງຕຸ້ມລານ</option>
+              <option value="ເມືອງລະຄອນເພັງ">ເມືອງລະຄອນເພັງ</option>
+              <option value="ເມືອງວາປີ">ເມືອງວາປີ</option>
+              <option value="ເມືອງສະໝ້ວຍ">ເມືອງສະໝ້ວຍ</option>
+              <option value="ເມືອງທ່າຕ້ງ">ເມືອງທ່າຕ້ງ</option>
+              <option value="ເມືອງກະລຶມ">ເມືອງກະລຶມ</option>
+            </optgroup>
+            <!-- ສາວັນນະເຂດ -->
+            <optgroup label="ແຂວງສາວັນນະເຂດ">
+              <option value="ເມືອງໄກສອນພົມວິຫານ">ເມືອງໄກສອນພົມວິຫານ</option>
+              <option value="ເມືອງອາດສະພອນ">ເມືອງອາດສະພອນ</option>
+              <option value="ເມືອງອາດສະພອນເໜືອ">ເມືອງອາດສະພອນເໜືອ</option>
+              <option value="ເມືອງທ່າປາງທອງ">ເມືອງທ່າປາງທອງ</option>
+              <option value="ເມືອງຈຳພອນ">ເມືອງຈຳພອນ</option>
+              <option value="ເມືອງຊໍາໂພນ">ເມືອງຊໍາໂພນ</option>
+            </optgroup>
+            <optgroup label="ອື່ນໆ">
+              <option value="ອື່ນໆ">ອື່ນໆ (ໃສ່ໃນໝາຍເຫດ)</option>
+            </optgroup>
+          </select>
+        </div>
+
         <div class="field">
           <label>ແຂວງ <span class="req">*</span></label>
           <input type="text" id="province" placeholder="ຊື່ແຂວງ" value="ອຸດົມໄຊ">
         </div>
+
         <div class="field span-2">
           <label>ເບີຕິດຕໍ່ <span class="req">*</span></label>
           <input type="tel" id="phone" placeholder="020XXXXXXXX">
         </div>
+
       </div>
     </div>
   </div>
- 
-  <!-- GPS -->
+
+  <!-- ══════════════════════════════════════
+       2. GPS
+  ══════════════════════════════════════ -->
   <div class="section">
     <div class="section-header" style="background: #1E8449;">🗺️ ຈຸດ GPS (ທີ່ຕັ້ງລູກຄ້າ)</div>
     <div class="section-body">
@@ -443,12 +438,13 @@
       <p style="font-size:0.75rem;color:var(--text-muted);margin-top:8px;">💡 ຄລິກທີ່ແຜນທີ່ ຫຼື ກົດ "ດຶງ GPS" ເພື່ອໝາຍຈຸດທີ່ຕັ້ງ</p>
     </div>
   </div>
- 
-  <!-- USER + NETWORK -->
+
+  <!-- ══════════════════════════════════════
+       3. User + ເຄືອຂ່າຍ
+  ══════════════════════════════════════ -->
   <div class="section">
     <div class="section-header">📶 ຂໍ້ມູນການໃຊ້ງານ</div>
     <div class="section-body">
-      <!-- User field: optional -->
       <div class="field" style="margin-bottom:16px;">
         <label>User <span class="opt">(ບໍ່ຈໍາເປັນ)</span></label>
         <input type="text" id="userField" placeholder="Username (ຖ້າມີ)">
@@ -478,19 +474,21 @@
             <span class="dot"></span>ບໍ່ມີ
           </label>
           <label class="cb-item" onclick="toggleCb(this)" style="border-color:#E74C3C;">
-            <input type="checkbox" name="network" value="ລູກຄ້າບໍ່ໃຫ້ຄວາມຮ່ວມມື" id="noCooperate">
+            <input type="checkbox" name="network" value="ລູກຄ້າບໍ່ໃຫ້ຄວາມຮ່ວມມື">
             <span class="dot" style="border-color:#E74C3C;"></span>⚠️ ລູກຄ້າບໍ່ໃຫ້ຄວາມຮ່ວມມື
           </label>
         </div>
       </div>
     </div>
   </div>
- 
-  <!-- RESULT -->
+
+  <!-- ══════════════════════════════════════
+       4. ຜົນປະຕິບັດ
+  ══════════════════════════════════════ -->
   <div class="section">
-    <div class="section-header section-header red">📊 ຜົນປະຕິບັດ</div>
+    <div class="section-header red">📊 ຜົນປະຕິບັດ</div>
     <div class="section-body">
-      <div class="field" style="margin-bottom:16px;">
+      <div class="field">
         <label>ຜົນການດຳເນີນງານ</label>
         <div class="radio-group" id="resultGroup">
           <label class="radio-item" onclick="toggleRadio(this,'resultGroup')">
@@ -507,13 +505,14 @@
           </label>
         </div>
       </div>
- 
     </div>
   </div>
- 
-  <!-- PACKAGE & NOTES -->
+
+  <!-- ══════════════════════════════════════
+       5. ແພັກເກດ + ໝາຍເຫດ
+  ══════════════════════════════════════ -->
   <div class="section">
-    <div class="section-header section-header gold">📅 ແພັກເກດ ແລະ ໝາຍເຫດ</div>
+    <div class="section-header gold">📅 ແພັກເກດ ແລະ ໝາຍເຫດ</div>
     <div class="section-body">
       <div class="grid-2">
         <div class="field span-2">
@@ -537,7 +536,25 @@
       </div>
     </div>
   </div>
- 
+
+  <!-- ══════════════════════════════════════
+       6. ⬇ ເດືອນ — ຢູ່ທ້າຍສຸດ
+  ══════════════════════════════════════ -->
+  <div class="section section-month">
+    <div class="section-header" style="background:#6C3483;">
+      📅 ເລືອກເດືອນ (Sheet ທີ່ຈະບັນທຶກ)
+    </div>
+    <div class="section-body">
+      <div class="field">
+        <label style="color:#6C3483;">ເດືອນ <span class="req">*</span></label>
+        <select id="citySelect">
+          <option value="">— ເລືອກເດືອນ —</option>
+        </select>
+      </div>
+      <p style="font-size:0.75rem;color:var(--text-muted);margin-top:8px;">📌 ຂໍ້ມູນຈະໄປໃສ່ Sheet ຕາມເດືອນທີ່ເລືອກ</p>
+    </div>
+  </div>
+
   <div class="submit-wrap">
     <button class="btn-submit" id="submitBtn" onclick="submitForm()">
       <span class="spinner"></span>
@@ -546,28 +563,28 @@
     <p style="margin-top:12px;font-size:0.78rem;color:var(--text-muted);">ຂໍ້ມູນຈະຖືກສົ່ງໄປຍັງ Google Sheet ຕາມເດືອນທີ່ເລືອກ</p>
   </div>
 </main>
- 
+
 <div id="toast"></div>
- 
+
 <script>
   // ─── CONFIG ───────────────────────────────────────────────────
   const SHEET_ID = '1edUmcLdyRk-YSU0jPMWuo2ZJywtYVZ5tn2sw_i7-BU8';
-  // ⚠️ ໃສ່ URL ຂອງ Google Apps Script Web App ທີ່ Deploy ແລ້ວ:
-  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxaH13gH-Ys9FCb49UqIkNfc51AKocvZV8o_7EzjHjhLL3O_ZzVmaa1BJ_7GqqxpdxG/exec'; // ⚠️ Deploy Apps Script ໃໝ່ຈາກ Sheet ໃໝ່ແລ້ວປ່ຽນ URL ນີ້
+  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxaH13gH-Ys9FCb49UqIkNfc51AKocvZV8o_7EzjHjhLL3O_ZzVmaa1BJ_7GqqxpdxG/exec';
   // ──────────────────────────────────────────────────────────────
- 
+
   // MAP
   let map, marker;
   function initMap() {
     if (typeof L === 'undefined') { setTimeout(initMap, 300); return; }
     map = L.map('map').setView([20.7, 102.0], 10);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '© OpenStreetMap',
-      maxZoom: 19
+      attribution: '© OpenStreetMap', maxZoom: 19
     }).addTo(map);
     map.on('click', (e) => setMarker(e.latlng.lat, e.latlng.lng));
   }
-  // DYNAMIC MONTH DROPDOWN — starts from current month
+  window.addEventListener('load', initMap);
+
+  // MONTH DROPDOWN (dynamic, starts current month)
   (function buildMonthOptions() {
     const LAO_MONTHS = [
       'ມັງກອນ','ກຸມພາ','ມີນາ','ເມສາ','ພຶດສະພາ','ມິຖຸນາ',
@@ -575,24 +592,20 @@
     ];
     const now = new Date();
     const sel = document.getElementById('citySelect');
-    // generate 12 months starting from current month
     for (let i = 0; i < 12; i++) {
       const d = new Date(now.getFullYear(), now.getMonth() + i, 1);
       const mm = String(d.getMonth() + 1).padStart(2, '0');
       const yyyy = d.getFullYear();
-      const val = mm + '-' + yyyy;
+      const val = mm + '-' + yyyy;   // e.g. "06-2026"  ← sheet name
       const label = 'ເດືອນ ' + (d.getMonth()+1) + ' / ' + LAO_MONTHS[d.getMonth()] + ' ' + yyyy;
       const opt = document.createElement('option');
       opt.value = val;
       opt.textContent = label;
-      // auto-select current month
       if (i === 0) opt.selected = true;
       sel.appendChild(opt);
     }
   })();
- 
-  window.addEventListener('load', initMap);
- 
+
   function updateMarkerFromInput() {
     const lat = parseFloat(document.getElementById('lat').value);
     const lng = parseFloat(document.getElementById('lng').value);
@@ -603,7 +616,7 @@
       }
     }
   }
- 
+
   function setMarker(lat, lng, fromInput) {
     if (marker) map.removeLayer(marker);
     marker = L.marker([lat, lng], {
@@ -617,13 +630,12 @@
       document.getElementById('lng').value = lng.toFixed(6);
     }
   }
- 
+
   function locateMe() {
     if (!navigator.geolocation) { showToast('ອຸປະກອນນີ້ບໍ່ຮອງຮັບ GPS', true); return; }
     const btn = document.querySelector('.btn-locate');
     btn.textContent = '⏳ ກຳລັງດຶງ GPS...';
     btn.disabled = true;
- 
     navigator.geolocation.getCurrentPosition(
       pos => {
         const { latitude, longitude, accuracy } = pos.coords;
@@ -638,97 +650,76 @@
         btn.disabled = false;
         showToast('❌ GPS ລົ້ມເຫຼວ: ' + err.message, true);
       },
-      {
-        enableHighAccuracy: true,  // ໃຊ້ GPS ຊິບ (ບໍ່ໃຊ້ WiFi)
-        timeout: 15000,            // ລໍຖ້າ 15 ວິນາທີ
-        maximumAge: 0              // ບໍ່ໃຊ້ cache ເກົ່າ
-      }
+      { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 }
     );
   }
- 
-  // CHECKBOX
+
   function toggleCb(el) {
     const cb = el.querySelector('input[type="checkbox"]');
-    setTimeout(() => {
-      el.classList.toggle('checked', cb.checked);
-    }, 0);
+    setTimeout(() => { el.classList.toggle('checked', cb.checked); }, 0);
   }
- 
-  // RADIO
+
   function toggleRadio(el, groupId) {
     document.querySelectorAll(`#${groupId} .radio-item`).forEach(r => r.classList.remove('checked'));
     setTimeout(() => el.classList.add('checked'), 0);
   }
- 
-  // TOGGLE
- 
- 
-  // ROW NUMBER: auto-increment per sheet (simple timestamp-based for now)
-  let rowCounter = Date.now();
- 
-  // SUBMIT
+
+  // ─── SUBMIT ───────────────────────────────────────────────────
   async function submitForm() {
-    const city = document.getElementById('citySelect').value;
-    const name = document.getElementById('name').value.trim();
-    const village = document.getElementById('village').value.trim();
+    // --- collect values ---
+    const sheet    = document.getElementById('citySelect').value;      // sheet name e.g. "06-2026"
+    const district = document.getElementById('districtSelect').value;  // ຊື່ເມືອງ → column D
+    const name     = document.getElementById('name').value.trim();
+    const village  = document.getElementById('village').value.trim();
     const province = document.getElementById('province').value.trim();
-    const phone = document.getElementById('phone').value.trim();
- 
-    // Validation
-    if (!city) { showToast('⚠️ ກະລຸນາເລືອກເດືອນ', true); return; }
-    if (!name) { showToast('⚠️ ກະລຸນາໃສ່ຊື່ລູກຄ້າ', true); return; }
-    if (!village) { showToast('⚠️ ກະລຸນາໃສ່ຊື່ບ້ານ', true); return; }
-    if (!phone) { showToast('⚠️ ກະລຸນາໃສ່ເບີຕິດຕໍ່', true); return; }
- 
-    // Networks
+    const phone    = document.getElementById('phone').value.trim();
+
+    // --- validation ---
+    if (!name)     { showToast('⚠️ ກະລຸນາໃສ່ຊື່ລູກຄ້າ', true);  return; }
+    if (!village)  { showToast('⚠️ ກະລຸນາໃສ່ຊື່ບ້ານ', true);    return; }
+    if (!district) { showToast('⚠️ ກະລຸນາເລືອກເມືອງ', true);    return; }
+    if (!phone)    { showToast('⚠️ ກະລຸນາໃສ່ເບີຕິດຕໍ່', true);  return; }
+    if (!sheet)    { showToast('⚠️ ກະລຸນາເລືອກເດືອນ', true);    return; }
+
     const networks = [...document.querySelectorAll('input[name="network"]:checked')].map(c => c.value);
-    const result = document.querySelector('input[name="result"]:checked')?.value || '';
- 
+    const result   = document.querySelector('input[name="result"]:checked')?.value || '';
+
     const payload = {
-      sheet: city,
+      sheet,                  // → sheet tab name (e.g. "06-2026")
       data: {
         name,
         village,
-        city,
+        city: district,       // ← ຊື່ເມືອງ → column D
         province,
         phone,
-        lat: document.getElementById('lat').value,
-        lng: document.getElementById('lng').value,
+        lat:  document.getElementById('lat').value,
+        lng:  document.getElementById('lng').value,
         user: document.getElementById('userField').value.trim(),
-        unitel: networks.includes('Unitel') ? '✓' : '',
-        etl:    networks.includes('ETL')    ? '✓' : '',
-        best:   networks.includes('Best')   ? '✓' : '',
-        ltc:    networks.includes('LTC')    ? '✓' : '',
-        noNetwork: networks.includes('ບໍ່ມີ') ? '✓' : '',
-        interested:   result === 'ສົນໃຈ'       ? '✓' : '',
+        unitel:      networks.includes('Unitel') ? '✓' : '',
+        etl:         networks.includes('ETL')    ? '✓' : '',
+        best:        networks.includes('Best')   ? '✓' : '',
+        ltc:         networks.includes('LTC')    ? '✓' : '',
+        noNetwork:   networks.includes('ບໍ່ມີ')  ? '✓' : '',
+        noCooperate: networks.includes('ລູກຄ້າບໍ່ໃຫ້ຄວາມຮ່ວມມື') ? '✓' : '',
+        interested:    result === 'ສົນໃຈ'       ? '✓' : '',
         notInterested: result === 'ບໍ່ສົນໃຈ'    ? '✓' : '',
-        waiting:      result === 'ລໍຖ້າຄຳຕອບ' ? '✓' : '',
-        noCooperate: [...document.querySelectorAll('input[name="network"]:checked')].some(c=>c.value==='ລູກຄ້າບໍ່ໃຫ້ຄວາມຮ່ວມມື') ? '✓' : '',
+        waiting:       result === 'ລໍຖ້າຄຳຕອບ' ? '✓' : '',
         packageExpiry: (()=>{
-          const d=document.getElementById('expDay').value.padStart(2,'0');
-          const m=document.getElementById('expMonth').value.padStart(2,'0');
-          const y=document.getElementById('expYear').value;
-          return (d&&m&&y) ? d+'/'+m+'/'+y : '';
+          const d = document.getElementById('expDay').value.padStart(2,'0');
+          const m = document.getElementById('expMonth').value.padStart(2,'0');
+          const y = document.getElementById('expYear').value;
+          return (d && m && y) ? d+'/'+m+'/'+y : '';
         })(),
         usageInfo: document.getElementById('usageInfo').value.trim(),
-        remark: document.getElementById('remark').value.trim(),
+        remark:    document.getElementById('remark').value.trim(),
         timestamp: new Date().toLocaleString('lo-LA')
       }
     };
- 
-    if (APPS_SCRIPT_URL === 'YOUR_APPS_SCRIPT_URL_HERE') {
-      // Demo mode
-      console.log('📋 Payload:', payload);
-      showToast('⚠️ Demo Mode: ຍັງບໍ່ໄດ້ຕັ້ງ Apps Script URL — ເບິ່ງຄຳແນະນຳດ້ານລຸ່ມ', true);
-      return;
-    }
- 
+
     const btn = document.getElementById('submitBtn');
     btn.disabled = true;
     btn.classList.add('loading');
- 
-    // Use no-cors fetch (Apps Script CORS workaround)
-    // We assume success after sending since no-cors won't return readable response
+
     try {
       await fetch(APPS_SCRIPT_URL, {
         method: 'POST',
@@ -745,21 +736,20 @@
       btn.classList.remove('loading');
     }
   }
- 
+
   function resetForm() {
     ['name','village','phone','lat','lng','userField','usageInfo','remark'].forEach(id => {
       document.getElementById(id).value = '';
     });
     ['expDay','expMonth','expYear'].forEach(id => document.getElementById(id).value = '');
- 
- 
+    document.getElementById('districtSelect').value = '';
     document.querySelectorAll('input[name="network"]').forEach(c => c.checked = false);
     document.querySelectorAll('.cb-item').forEach(c => c.classList.remove('checked'));
     document.querySelectorAll('input[name="result"]').forEach(c => c.checked = false);
     document.querySelectorAll('.radio-item').forEach(c => c.classList.remove('checked'));
     if (marker) { map.removeLayer(marker); marker = null; }
   }
- 
+
   function showToast(msg, isError = false) {
     const t = document.getElementById('toast');
     t.textContent = msg;
@@ -768,72 +758,6 @@
     t._timer = setTimeout(() => t.classList.remove('show'), 3500);
   }
 </script>
- 
-<!-- ═══════════════════════════════════════════════════════════
-  📌 ຄຳແນະນຳຕັ້ງ Google Apps Script
-  ════════════════════════════════════════════════════════════
- 
-  1. ເປີດ Google Sheet ຂອງທ່ານ
-  2. ໄປທີ່: Extensions > Apps Script
-  3. ລົບ Code ເດີມ ແລ້ວ Paste Code ດ້ານລຸ່ມ:
- 
-  ─────────────────────────────────────────────────────────────
-  function doPost(e) {
-    try {
-      var body = JSON.parse(e.postData.contents);
-      var ss = SpreadsheetApp.getActiveSpreadsheet();
-      var sheet = ss.getSheetByName(body.sheet);
-      if (!sheet) return ContentService
-        .createTextOutput(JSON.stringify({result:'error',error:'Sheet not found: '+body.sheet}))
-        .setMimeType(ContentService.MimeType.JSON);
- 
-      var d = body.data;
-      // ນັບແຖວຂໍ້ມູນຈິງ (ບໍ່ລວມ header 2 ແຖວ)
-      var lastRow = sheet.getLastRow();
-      var dataRows = Math.max(lastRow - 2, 0);
-      var rowNum = dataRows + 1;
- 
-      // column order matches new monthly sheet format:
-      // ລດ | ຊື່ | ບ້ານ | ເມືອງ | ແຂວງ | ເບີ | Lat | Long | user
-      // Unitel | ETL | Best | LTC | ບໍ່ມີ | ລູກຄ້າບໍ່ໃຫ້ຄວາມຮ່ວມມື
-      // ສົນໃຈ | ບໍ່ສົນໃຈ | ລໍຖ້າຄຳຕອບ
-      // ວັນທີ່ໝົດແພັກ | ຂໍ້ມູນການໃຊ້ງານ | ໝາຍເຫດ | timestamp
-      sheet.appendRow([
-        rowNum, d.name, d.village, d.city, d.province, d.phone,
-        d.lat, d.lng, d.user,
-        d.unitel, d.etl, d.best, d.ltc, d.noNetwork, d.noCooperate,
-        d.interested, d.notInterested, d.waiting,
-        d.packageExpiry, d.usageInfo, d.remark,
-        d.timestamp
-      ]);
- 
-      return ContentService
-        .createTextOutput(JSON.stringify({result:'success'}))
-        .setMimeType(ContentService.MimeType.JSON);
-    } catch(err) {
-      return ContentService
-        .createTextOutput(JSON.stringify({result:'error',error:err.message}))
-        .setMimeType(ContentService.MimeType.JSON);
-    }
-  }
- 
-  function doGet(e) {
-    return ContentService
-      .createTextOutput(JSON.stringify({status:'ok'}))
-      .setMimeType(ContentService.MimeType.JSON);
-  }
-  ─────────────────────────────────────────────────────────────
- 
-  4. ກົດ Save (Ctrl+S)
-  5. ກົດ "Deploy" > "New deployment"
-  6. Type: "Web app"
-     - Execute as: Me
-     - Who has access: Anyone
-  7. ກົດ "Deploy" > Copy URL ທີ່ໄດ້
-  8. ເອົາ URL ນັ້ນ ໃສ່ໃນ const APPS_SCRIPT_URL = '...' ໃນ HTML ນີ້
- 
-  ═══════════════════════════════════════════════════════════ -->
- 
+
 </body>
 </html>
- 
