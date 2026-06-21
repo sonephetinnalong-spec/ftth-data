@@ -180,6 +180,9 @@
   .radio-item input:checked ~ .rdot { border-color: var(--red); background: var(--red); }
   .radio-item input:checked ~ .rdot::after { content: ''; width: 5px; height: 5px; background: white; border-radius: 50%; }
   .radio-item.checked { border-color: var(--red); background: var(--red-light); }
+  /* warning radio (ລູກຄ້າບໍ່ໃຫ້ຄວາມຮ່ວມມື) */
+  .radio-item.warn-item:hover { border-color: #E74C3C; background: #FDECEA; }
+  .radio-item.warn-item.checked { border-color: #E74C3C; background: #FDECEA; color: #C0392B; font-weight: 600; }
 
   #map {
     height: 240px;
@@ -323,81 +326,18 @@
           <input type="text" id="village" placeholder="ຊື່ບ້ານ">
         </div>
 
-        <!-- ▶ NEW: ເມືອງ dropdown -->
+        <!-- ▶ ເມືອງ dropdown — ອຸດົມໄຊ 7 ເມືອງ -->
         <div class="field">
           <label>ເມືອງ <span class="req">*</span></label>
           <select id="districtSelect">
             <option value="">— ເລືອກເມືອງ —</option>
-            <!-- ອຸດົມໄຊ -->
-            <optgroup label="ແຂວງອຸດົມໄຊ">
-              <option value="ເມືອງໄຊ">ເມືອງໄຊ</option>
-              <option value="ເມືອງນາ">ເມືອງນາ</option>
-              <option value="ເມືອງລາ">ເມືອງລາ</option>
-              <option value="ເມືອງແບງ">ເມືອງແບງ</option>
-              <option value="ເມືອງຮຸນ">ເມືອງຮຸນ</option>
-              <option value="ເມືອງງາ">ເມືອງງາ</option>
-              <option value="ເມືອງປາກແບງ">ເມືອງປາກແບງ</option>
-            </optgroup>
-            <!-- ວຽງຈັນ -->
-            <optgroup label="ນະຄອນຫຼວງວຽງຈັນ">
-              <option value="ເມືອງຈັນທະບູລີ">ເມືອງຈັນທະບູລີ</option>
-              <option value="ເມືອງສີໂຄດຕະບອງ">ເມືອງສີໂຄດຕະບອງ</option>
-              <option value="ເມືອງໄຊເສດຖາ">ເມືອງໄຊເສດຖາ</option>
-              <option value="ເມືອງສີສັດຕະນາກ">ເມືອງສີສັດຕະນາກ</option>
-              <option value="ເມືອງຫາດຊາຍຟອງ">ເມືອງຫາດຊາຍຟອງ</option>
-              <option value="ເມືອງສັງທອງ">ເມືອງສັງທອງ</option>
-              <option value="ເມືອງໃຫ້ຄຳ">ເມືອງໃຫ້ຄຳ</option>
-              <option value="ເມືອງນາຊາຍທອງ">ເມືອງນາຊາຍທອງ</option>
-              <option value="ເມືອງໂພນຫອງ">ເມືອງໂພນຫອງ</option>
-            </optgroup>
-            <!-- ຫຼວງພະບາງ -->
-            <optgroup label="ແຂວງຫຼວງພະບາງ">
-              <option value="ເມືອງຫຼວງພະບາງ">ເມືອງຫຼວງພະບາງ</option>
-              <option value="ເມືອງຊຽງເງິນ">ເມືອງຊຽງເງິນ</option>
-              <option value="ເມືອງນານ">ເມືອງນານ</option>
-              <option value="ເມືອງປາກອູ">ເມືອງປາກອູ</option>
-              <option value="ເມືອງນ້ຳບາກ">ເມືອງນ້ຳບາກ</option>
-              <option value="ເມືອງງອຍ">ເມືອງງອຍ</option>
-              <option value="ເມືອງປາກແຊງ">ເມືອງປາກແຊງ</option>
-              <option value="ເມືອງໂພນໄຊ">ເມືອງໂພນໄຊ</option>
-              <option value="ເມືອງຄາ">ເມືອງຄາ</option>
-              <option value="ເມືອງໂພນທອງ">ເມືອງໂພນທອງ</option>
-              <option value="ເມືອງວຽງຄຳ">ເມືອງວຽງຄຳ</option>
-              <option value="ເມືອງຈອມເພດ">ເມືອງຈອມເພດ</option>
-            </optgroup>
-            <!-- ຊຽງຂວາງ -->
-            <optgroup label="ແຂວງຊຽງຂວາງ">
-              <option value="ເມືອງແປກ">ເມືອງແປກ</option>
-              <option value="ເມືອງຄູນ">ເມືອງຄູນ</option>
-              <option value="ເມືອງໜອງແຮດ">ເມືອງໜອງແຮດ</option>
-              <option value="ເມືອງຄໍາ">ເມືອງຄໍາ</option>
-              <option value="ເມືອງໄຊຈຳພອນ">ເມືອງໄຊຈຳພອນ</option>
-              <option value="ເມືອງຜາໄຊ">ເມືອງຜາໄຊ</option>
-              <option value="ເມືອງໝໍ້">ເມືອງໝໍ້</option>
-            </optgroup>
-            <!-- ສາລະວັນ -->
-            <optgroup label="ແຂວງສາລະວັນ">
-              <option value="ເມືອງສາລະວັນ">ເມືອງສາລະວັນ</option>
-              <option value="ເມືອງລາໂອງາມ">ເມືອງລາໂອງາມ</option>
-              <option value="ເມືອງຕຸ້ມລານ">ເມືອງຕຸ້ມລານ</option>
-              <option value="ເມືອງລະຄອນເພັງ">ເມືອງລະຄອນເພັງ</option>
-              <option value="ເມືອງວາປີ">ເມືອງວາປີ</option>
-              <option value="ເມືອງສະໝ້ວຍ">ເມືອງສະໝ້ວຍ</option>
-              <option value="ເມືອງທ່າຕ້ງ">ເມືອງທ່າຕ້ງ</option>
-              <option value="ເມືອງກະລຶມ">ເມືອງກະລຶມ</option>
-            </optgroup>
-            <!-- ສາວັນນະເຂດ -->
-            <optgroup label="ແຂວງສາວັນນະເຂດ">
-              <option value="ເມືອງໄກສອນພົມວິຫານ">ເມືອງໄກສອນພົມວິຫານ</option>
-              <option value="ເມືອງອາດສະພອນ">ເມືອງອາດສະພອນ</option>
-              <option value="ເມືອງອາດສະພອນເໜືອ">ເມືອງອາດສະພອນເໜືອ</option>
-              <option value="ເມືອງທ່າປາງທອງ">ເມືອງທ່າປາງທອງ</option>
-              <option value="ເມືອງຈຳພອນ">ເມືອງຈຳພອນ</option>
-              <option value="ເມືອງຊໍາໂພນ">ເມືອງຊໍາໂພນ</option>
-            </optgroup>
-            <optgroup label="ອື່ນໆ">
-              <option value="ອື່ນໆ">ອື່ນໆ (ໃສ່ໃນໝາຍເຫດ)</option>
-            </optgroup>
+            <option value="ເມືອງໄຊ">ເມືອງໄຊ</option>
+            <option value="ເມືອງນາໝໍ້">ເມືອງນາໝໍ້</option>
+            <option value="ເມືອງຫຼາ">ເມືອງຫຼາ</option>
+            <option value="ເມືອງແບງ">ເມືອງແບງ</option>
+            <option value="ເມືອງຮຸນ">ເມືອງຮຸນ</option>
+            <option value="ເມືອງປາກແບງ">ເມືອງປາກແບງ</option>
+            <option value="ເມືອງງາ">ເມືອງງາ</option>
           </select>
         </div>
 
@@ -473,17 +413,14 @@
             <input type="checkbox" name="network" value="ບໍ່ມີ">
             <span class="dot"></span>ບໍ່ມີ
           </label>
-          <label class="cb-item" onclick="toggleCb(this)" style="border-color:#E74C3C;">
-            <input type="checkbox" name="network" value="ລູກຄ້າບໍ່ໃຫ້ຄວາມຮ່ວມມື">
-            <span class="dot" style="border-color:#E74C3C;"></span>⚠️ ລູກຄ້າບໍ່ໃຫ້ຄວາມຮ່ວມມື
-          </label>
+
         </div>
       </div>
     </div>
   </div>
 
   <!-- ══════════════════════════════════════
-       4. ຜົນປະຕິບັດ
+       4. ຜົນປະຕິບັດ (ລວມ ລູກຄ້າບໍ່ໃຫ້ຄວາມຮ່ວມມື)
   ══════════════════════════════════════ -->
   <div class="section">
     <div class="section-header red">📊 ຜົນປະຕິບັດ</div>
@@ -502,6 +439,10 @@
           <label class="radio-item" onclick="toggleRadio(this,'resultGroup')">
             <input type="radio" name="result" value="ລໍຖ້າຄຳຕອບ">
             <span class="rdot"></span>⏳ ລໍຖ້າຄຳຕອບ
+          </label>
+          <label class="radio-item warn-item" onclick="toggleRadio(this,'resultGroup')">
+            <input type="radio" name="result" value="ລູກຄ້າບໍ່ໃຫ້ຄວາມຮ່ວມມື">
+            <span class="rdot"></span>⚠️ ລູກຄ້າບໍ່ໃຫ້ຄວາມຮ່ວມມື
           </label>
         </div>
       </div>
@@ -532,6 +473,13 @@
         <div class="field span-2">
           <label>ໝາຍເຫດ</label>
           <textarea id="remark" placeholder="ໝາຍເຫດເພີ່ມເຕີມ..."></textarea>
+        </div>
+
+        <!-- Fix 4: ວັນທີ່ເດືອນປີລົງພື້ນທີ່ — ເລືອກໄດ້, ຖ້າວ່າງໃຊ້ auto -->
+        <div class="field span-2">
+          <label>📅 ວັນທີ່ເດືອນປີລົງພື້ນທີ່ <span class="opt">(ບໍ່ໃສ່ = ໃຊ້ວັນທີ່ ແລະ ເວລາປັດຈຸບັນ)</span></label>
+          <input type="datetime-local" id="tsInput" style="font-size:0.9rem;">
+          <p style="font-size:0.73rem;color:var(--text-muted);margin-top:4px;">💡 ຖ້າຕ້ອງການແກ້ວັນທີ-ເວລາ ໃຫ້ເລືອກຈາກຊ່ອງນີ້; ຖ້າວ່າງ ລະບົບຈະໃຊ້ "ຕອນນີ້" ໂດຍອັດຕະໂນມັດ</p>
         </div>
       </div>
     </div>
@@ -700,10 +648,10 @@
         best:        networks.includes('Best')   ? '✓' : '',
         ltc:         networks.includes('LTC')    ? '✓' : '',
         noNetwork:   networks.includes('ບໍ່ມີ')  ? '✓' : '',
-        noCooperate: networks.includes('ລູກຄ້າບໍ່ໃຫ້ຄວາມຮ່ວມມື') ? '✓' : '',
-        interested:    result === 'ສົນໃຈ'       ? '✓' : '',
-        notInterested: result === 'ບໍ່ສົນໃຈ'    ? '✓' : '',
-        waiting:       result === 'ລໍຖ້າຄຳຕອບ' ? '✓' : '',
+        noCooperate: result === 'ລູກຄ້າບໍ່ໃຫ້ຄວາມຮ່ວມມື' ? '✓' : '',
+        interested:    result === 'ສົນໃຈ'                    ? '✓' : '',
+        notInterested: result === 'ບໍ່ສົນໃຈ'               ? '✓' : '',
+        waiting:       result === 'ລໍຖ້າຄຳຕອບ'            ? '✓' : '',
         packageExpiry: (()=>{
           const d = document.getElementById('expDay').value.padStart(2,'0');
           const m = document.getElementById('expMonth').value.padStart(2,'0');
@@ -712,7 +660,32 @@
         })(),
         usageInfo: document.getElementById('usageInfo').value.trim(),
         remark:    document.getElementById('remark').value.trim(),
-        timestamp: new Date().toLocaleString('lo-LA')
+        timestamp: (()=>{
+          // ໃຊ້ manual format ເພື່ອໃຫ້ປີ Gregorian (2026) ບໍ່ແມ່ນ Buddhist Era (2569)
+          const tsInput = document.getElementById('tsInput').value;
+          if (tsInput) {
+            // ຜູ້ໃຊ້ໃສ່ເອງ — ໃຊ້ຄ່ານັ້ນໂດຍກົງ
+            const dt = new Date(tsInput);
+            if (!isNaN(dt)) {
+              const dd = String(dt.getDate()).padStart(2,'0');
+              const mm = String(dt.getMonth()+1).padStart(2,'0');
+              const yyyy = dt.getFullYear();
+              const hh = String(dt.getHours()).padStart(2,'0');
+              const mi = String(dt.getMinutes()).padStart(2,'0');
+              const ss = String(dt.getSeconds()).padStart(2,'0');
+              return dd+'/'+mm+'/'+yyyy+', '+hh+':'+mi+':'+ss;
+            }
+          }
+          // auto: ໃຊ້ວັນທີປັດຈຸບັນ
+          const now = new Date();
+          const dd = String(now.getDate()).padStart(2,'0');
+          const mm = String(now.getMonth()+1).padStart(2,'0');
+          const yyyy = now.getFullYear();
+          const hh = String(now.getHours()).padStart(2,'0');
+          const mi = String(now.getMinutes()).padStart(2,'0');
+          const ss = String(now.getSeconds()).padStart(2,'0');
+          return dd+'/'+mm+'/'+yyyy+', '+hh+':'+mi+':'+ss;
+        })()
       }
     };
 
@@ -741,7 +714,7 @@
     ['name','village','phone','lat','lng','userField','usageInfo','remark'].forEach(id => {
       document.getElementById(id).value = '';
     });
-    ['expDay','expMonth','expYear'].forEach(id => document.getElementById(id).value = '');
+    ['expDay','expMonth','expYear','tsInput'].forEach(id => document.getElementById(id).value = '');
     document.getElementById('districtSelect').value = '';
     document.querySelectorAll('input[name="network"]').forEach(c => c.checked = false);
     document.querySelectorAll('.cb-item').forEach(c => c.classList.remove('checked'));
