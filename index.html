@@ -17,6 +17,8 @@
     --blue-light: #EAF2FB;
     --gold: #D4AC0D;
     --gold-light: #FEF9E7;
+    --green: #1E8449;
+    --green-light: #EAFAF1;
     --bg: #F5F6FA;
     --white: #FFFFFF;
     --text: #1C2333;
@@ -117,7 +119,6 @@
   }
   textarea { resize: vertical; min-height: 70px; }
 
-  /* District & Month select highlight */
   #districtSelect, #citySelect {
     font-size: 1rem;
     font-weight: 600;
@@ -180,9 +181,22 @@
   .radio-item input:checked ~ .rdot { border-color: var(--red); background: var(--red); }
   .radio-item input:checked ~ .rdot::after { content: ''; width: 5px; height: 5px; background: white; border-radius: 50%; }
   .radio-item.checked { border-color: var(--red); background: var(--red-light); }
-  /* warning radio (ລູກຄ້າບໍ່ໃຫ້ຄວາມຮ່ວມມື) */
+
   .radio-item.warn-item:hover { border-color: #E74C3C; background: #FDECEA; }
   .radio-item.warn-item.checked { border-color: #E74C3C; background: #FDECEA; color: #C0392B; font-weight: 600; }
+
+  /* ✅ ພ້ອມຕິດຕັ້ງ — green style */
+  .radio-item.install-item:hover { border-color: var(--green); background: var(--green-light); }
+  .radio-item.install-item.checked {
+    border-color: var(--green);
+    background: var(--green-light);
+    color: var(--green);
+    font-weight: 600;
+  }
+  .radio-item.install-item input:checked ~ .rdot {
+    border-color: var(--green);
+    background: var(--green);
+  }
 
   #map {
     height: 240px;
@@ -223,7 +237,6 @@
     margin-bottom: 16px;
   }
 
-  /* Month section at bottom — distinct look */
   .section-month .section-header { background: #6C3483; }
   .section-month select {
     font-size: 1rem;
@@ -308,9 +321,7 @@
     📋 ກະລຸນາກວດສອບຂໍ້ມູນໃຫ້ຖືກຕ້ອງກ່ອນກົດ "ບັນທຶກຂໍ້ມູນ" — ຂໍ້ມູນຈະຖືກສົ່ງໄປ Google Sheet ທັນທີ
   </div>
 
-  <!-- ══════════════════════════════════════
-       1. ຂໍ້ມູນລູກຄ້າ (ມີ dropdown ເມືອງ)
-  ══════════════════════════════════════ -->
+  <!-- 1. ຂໍ້ມູນລູກຄ້າ -->
   <div class="section">
     <div class="section-header">👤 ຂໍ້ມູນລູກຄ້າ</div>
     <div class="section-body">
@@ -326,7 +337,6 @@
           <input type="text" id="village" placeholder="ຊື່ບ້ານ">
         </div>
 
-        <!-- ▶ ເມືອງ dropdown — ອຸດົມໄຊ 7 ເມືອງ -->
         <div class="field">
           <label>ເມືອງ <span class="req">*</span></label>
           <select id="districtSelect">
@@ -355,9 +365,7 @@
     </div>
   </div>
 
-  <!-- ══════════════════════════════════════
-       2. GPS
-  ══════════════════════════════════════ -->
+  <!-- 2. GPS -->
   <div class="section">
     <div class="section-header" style="background: #1E8449;">🗺️ ຈຸດ GPS (ທີ່ຕັ້ງລູກຄ້າ)</div>
     <div class="section-body">
@@ -379,9 +387,7 @@
     </div>
   </div>
 
-  <!-- ══════════════════════════════════════
-       3. User + ເຄືອຂ່າຍ
-  ══════════════════════════════════════ -->
+  <!-- 3. User + ເຄືອຂ່າຍ -->
   <div class="section">
     <div class="section-header">📶 ຂໍ້ມູນການໃຊ້ງານ</div>
     <div class="section-body">
@@ -413,15 +419,12 @@
             <input type="checkbox" name="network" value="ບໍ່ມີ">
             <span class="dot"></span>ບໍ່ມີ
           </label>
-
         </div>
       </div>
     </div>
   </div>
 
-  <!-- ══════════════════════════════════════
-       4. ຜົນປະຕິບັດ (ລວມ ລູກຄ້າບໍ່ໃຫ້ຄວາມຮ່ວມມື)
-  ══════════════════════════════════════ -->
+  <!-- 4. ຜົນປະຕິບັດ -->
   <div class="section">
     <div class="section-header red">📊 ຜົນປະຕິບັດ</div>
     <div class="section-body">
@@ -444,14 +447,17 @@
             <input type="radio" name="result" value="ລູກຄ້າບໍ່ໃຫ້ຄວາມຮ່ວມມື">
             <span class="rdot"></span>⚠️ ລູກຄ້າບໍ່ໃຫ້ຄວາມຮ່ວມມື
           </label>
+          <!-- ✅ ພ້ອມຕິດຕັ້ງ NEW -->
+          <label class="radio-item install-item" onclick="toggleRadio(this,'resultGroup')">
+            <input type="radio" name="result" value="ພ້ອມຕິດຕັ້ງ">
+            <span class="rdot"></span>🔧 ພ້ອມຕິດຕັ້ງ
+          </label>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- ══════════════════════════════════════
-       5. ແພັກເກດ + ໝາຍເຫດ
-  ══════════════════════════════════════ -->
+  <!-- 5. ແພັກເກດ + ໝາຍເຫດ -->
   <div class="section">
     <div class="section-header gold">📅 ແພັກເກດ ແລະ ໝາຍເຫດ</div>
     <div class="section-body">
@@ -475,7 +481,6 @@
           <textarea id="remark" placeholder="ໝາຍເຫດເພີ່ມເຕີມ..."></textarea>
         </div>
 
-        <!-- Fix 4: ວັນທີ່ເດືອນປີລົງພື້ນທີ່ — ເລືອກໄດ້, ຖ້າວ່າງໃຊ້ auto -->
         <div class="field span-2">
           <label>📅 ວັນທີ່ເດືອນປີລົງພື້ນທີ່ <span class="opt">(ບໍ່ໃສ່ = ໃຊ້ວັນທີ່ ແລະ ເວລາປັດຈຸບັນ)</span></label>
           <input type="datetime-local" id="tsInput" style="font-size:0.9rem;">
@@ -485,9 +490,7 @@
     </div>
   </div>
 
-  <!-- ══════════════════════════════════════
-       6. ⬇ ເດືອນ — ຢູ່ທ້າຍສຸດ
-  ══════════════════════════════════════ -->
+  <!-- 6. ເດືອນ -->
   <div class="section section-month">
     <div class="section-header" style="background:#6C3483;">
       📅 ເລືອກເດືອນ (Sheet ທີ່ຈະບັນທຶກ)
@@ -515,10 +518,8 @@
 <div id="toast"></div>
 
 <script>
-  // ─── CONFIG ───────────────────────────────────────────────────
   const SHEET_ID = '1edUmcLdyRk-YSU0jPMWuo2ZJywtYVZ5tn2sw_i7-BU8';
   const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxaH13gH-Ys9FCb49UqIkNfc51AKocvZV8o_7EzjHjhLL3O_ZzVmaa1BJ_7GqqxpdxG/exec';
-  // ──────────────────────────────────────────────────────────────
 
   // MAP
   let map, marker;
@@ -532,7 +533,7 @@
   }
   window.addEventListener('load', initMap);
 
-  // MONTH DROPDOWN (dynamic, starts current month)
+  // MONTH DROPDOWN
   (function buildMonthOptions() {
     const LAO_MONTHS = [
       'ມັງກອນ','ກຸມພາ','ມີນາ','ເມສາ','ພຶດສະພາ','ມິຖຸນາ',
@@ -544,7 +545,7 @@
       const d = new Date(now.getFullYear(), now.getMonth() + i, 1);
       const mm = String(d.getMonth() + 1).padStart(2, '0');
       const yyyy = d.getFullYear();
-      const val = mm + '-' + yyyy;   // e.g. "06-2026"  ← sheet name
+      const val = mm + '-' + yyyy;
       const label = 'ເດືອນ ' + (d.getMonth()+1) + ' / ' + LAO_MONTHS[d.getMonth()] + ' ' + yyyy;
       const opt = document.createElement('option');
       opt.value = val;
@@ -612,17 +613,15 @@
     setTimeout(() => el.classList.add('checked'), 0);
   }
 
-  // ─── SUBMIT ───────────────────────────────────────────────────
+  // SUBMIT
   async function submitForm() {
-    // --- collect values ---
-    const sheet    = document.getElementById('citySelect').value;      // sheet name e.g. "06-2026"
-    const district = document.getElementById('districtSelect').value;  // ຊື່ເມືອງ → column D
+    const sheet    = document.getElementById('citySelect').value;
+    const district = document.getElementById('districtSelect').value;
     const name     = document.getElementById('name').value.trim();
     const village  = document.getElementById('village').value.trim();
     const province = document.getElementById('province').value.trim();
     const phone    = document.getElementById('phone').value.trim();
 
-    // --- validation ---
     if (!name)     { showToast('⚠️ ກະລຸນາໃສ່ຊື່ລູກຄ້າ', true);  return; }
     if (!village)  { showToast('⚠️ ກະລຸນາໃສ່ຊື່ບ້ານ', true);    return; }
     if (!district) { showToast('⚠️ ກະລຸນາເລືອກເມືອງ', true);    return; }
@@ -633,25 +632,26 @@
     const result   = document.querySelector('input[name="result"]:checked')?.value || '';
 
     const payload = {
-      sheet,                  // → sheet tab name (e.g. "06-2026")
+      sheet,
       data: {
         name,
         village,
-        city: district,       // ← ຊື່ເມືອງ → column D
+        city: district,
         province,
         phone,
         lat:  document.getElementById('lat').value,
         lng:  document.getElementById('lng').value,
         user: document.getElementById('userField').value.trim(),
-        unitel:      networks.includes('Unitel') ? '✓' : '',
-        etl:         networks.includes('ETL')    ? '✓' : '',
-        best:        networks.includes('Best')   ? '✓' : '',
-        ltc:         networks.includes('LTC')    ? '✓' : '',
-        noNetwork:   networks.includes('ບໍ່ມີ')  ? '✓' : '',
-        noCooperate: result === 'ລູກຄ້າບໍ່ໃຫ້ຄວາມຮ່ວມມື' ? '✓' : '',
-        interested:    result === 'ສົນໃຈ'                    ? '✓' : '',
-        notInterested: result === 'ບໍ່ສົນໃຈ'               ? '✓' : '',
-        waiting:       result === 'ລໍຖ້າຄຳຕອບ'            ? '✓' : '',
+        unitel:         networks.includes('Unitel') ? '✓' : '',
+        etl:            networks.includes('ETL')    ? '✓' : '',
+        best:           networks.includes('Best')   ? '✓' : '',
+        ltc:            networks.includes('LTC')    ? '✓' : '',
+        noNetwork:      networks.includes('ບໍ່ມີ')  ? '✓' : '',
+        noCooperate:    result === 'ລູກຄ້າບໍ່ໃຫ້ຄວາມຮ່ວມມື' ? '✓' : '',
+        interested:     result === 'ສົນໃຈ'           ? '✓' : '',
+        notInterested:  result === 'ບໍ່ສົນໃຈ'        ? '✓' : '',
+        waiting:        result === 'ລໍຖ້າຄຳຕອບ'     ? '✓' : '',
+        readyToInstall: result === 'ພ້ອມຕິດຕັ້ງ'    ? '✓' : '',
         packageExpiry: (()=>{
           const d = document.getElementById('expDay').value.padStart(2,'0');
           const m = document.getElementById('expMonth').value.padStart(2,'0');
@@ -661,10 +661,8 @@
         usageInfo: document.getElementById('usageInfo').value.trim(),
         remark:    document.getElementById('remark').value.trim(),
         timestamp: (()=>{
-          // ໃຊ້ manual format ເພື່ອໃຫ້ປີ Gregorian (2026) ບໍ່ແມ່ນ Buddhist Era (2569)
           const tsInput = document.getElementById('tsInput').value;
           if (tsInput) {
-            // ຜູ້ໃຊ້ໃສ່ເອງ — ໃຊ້ຄ່ານັ້ນໂດຍກົງ
             const dt = new Date(tsInput);
             if (!isNaN(dt)) {
               const dd = String(dt.getDate()).padStart(2,'0');
@@ -676,7 +674,6 @@
               return dd+'/'+mm+'/'+yyyy+', '+hh+':'+mi+':'+ss;
             }
           }
-          // auto: ໃຊ້ວັນທີປັດຈຸບັນ
           const now = new Date();
           const dd = String(now.getDate()).padStart(2,'0');
           const mm = String(now.getMonth()+1).padStart(2,'0');
